@@ -1,7 +1,16 @@
 const START = {
 	x: 202,
-	y: 405
-}
+	y: 405,
+};
+
+const FIELD = {
+	column: 101,
+	row: 83,
+	leftBorder: 101,
+	rightBorder: 303,
+	topBorder: 0,
+	bottomBorder: 322,
+};
 
 // Enemies our player must avoid
 var Enemy = function() {
@@ -42,20 +51,24 @@ Player.prototype.render = function() {
 
 // a handleInput() method
 Player.prototype.handleInput = function(key) {
-	switch(key) {
-		case 'left': this.x -= 101;
-		break;
-		case 'right': this.x += 101;
-		break;
-		case 'up': this.y -= 83;
-		break;
-		case 'down': this.y += 83;
+	switch (key) {
+		case 'left':
+			if (this.x >= FIELD.leftBorder) this.x -= FIELD.column;
+			break;
+		case 'right':
+			if (this.x <= FIELD.rightBorder) this.x += FIELD.column;
+			break;
+		case 'up':
+			if (this.y >= FIELD.topBorder) this.y -= FIELD.row;
+			break;
+		case 'down':
+			if (this.y <= FIELD.bottomBorder) this.y += FIELD.row;
+			break;
 	}
 };
 
 // Now instantiate your objects.
 let enemy1 = new Enemy();
-
 
 // Place all enemy objects in an array called allEnemies
 const allEnemies = [enemy1];
