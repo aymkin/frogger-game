@@ -1,3 +1,5 @@
+let scoreCount = 0;
+
 const START = {
 	x: 202,
 	y: 405,
@@ -12,16 +14,15 @@ const FIELD = {
 	bottomBorder: 322,
 };
 
-let SPEED = (min = 100, max = 200) => Math.floor(Math.random() * (max - min + 1)) + min;
+let SPEED = (min = 100, max = 300) =>
+	Math.floor(Math.random() * (max - min + 1)) + min;
 
-// Enemies our player must avoid
 const Enemy = function(x, y, speed, gamer) {
 	this.x = x;
 	this.y = y;
 	this.speed = speed;
 	this.gamer = gamer;
 	this.sprite = 'images/enemy-bug.png';
-	console.log(this.gamer.x, this.gamer.y);
 };
 
 Enemy.prototype.update = function(dt) {
@@ -30,14 +31,24 @@ Enemy.prototype.update = function(dt) {
 		this.x = -101;
 		this.speed = SPEED();
 	}
-	console.log(this.gamer.x, this.gamer.y, this.x, this.y);
+	if (this.isCollision()) {
+		this.gamer.beginAgain();
+	}
 };
 
 Enemy.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Enemy.prototype.isCollision = function() {};
+Enemy.prototype.isCollision = function() {
+	if (
+		this.x + FIELD.column >= this.gamer.x &&
+		this.x <= this.gamer.x + FIELD.column &&
+		this.y + 10 == this.gamer.y
+	) {
+		return true;
+	}
+};
 
 let Player = function(x, y) {
 	this.x = x;
@@ -51,7 +62,11 @@ Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// a handleInput() method
+Player.prototype.beginAgain = function() {
+	this.x = START.x;
+	this.y = START.y;
+};
+
 Player.prototype.handleInput = function(key) {
 	switch (key) {
 		case 'left':
@@ -62,6 +77,12 @@ Player.prototype.handleInput = function(key) {
 			break;
 		case 'up':
 			if (this.y >= FIELD.topBorder) this.y -= FIELD.row;
+
+			if (this.y < 0) {
+				scoreCount++;
+				alert(`You win ${scoreCount} times!`);
+				this.beginAgain();
+			}
 			break;
 		case 'down':
 			if (this.y <= FIELD.bottomBorder) this.y += FIELD.row;
