@@ -14,12 +14,17 @@ const FIELD = {
 	bottomBorder: 322,
 };
 
-let SPEED = (min = 100, max = 300) =>
+const SPEED = (min = 75, max = 200) =>
 	Math.floor(Math.random() * (max - min + 1)) + min;
 
-const Enemy = function(x, y, speed, gamer) {
+const Creature = function (x, y) {
 	this.x = x;
 	this.y = y;
+};
+
+
+	const Enemy = function(x, y, speed, gamer) {
+	Creature.call(this, x, y);
 	this.speed = speed;
 	this.gamer = gamer;
 	this.sprite = 'images/enemy-bug.png';
@@ -50,9 +55,8 @@ Enemy.prototype.isCollision = function() {
 	}
 };
 
-let Player = function(x, y) {
-	this.x = x;
-	this.y = y;
+const Player = function(x, y) {
+	Creature.call(this, x, y);
 	this.sprite = 'images/char-boy.png';
 };
 
@@ -90,7 +94,7 @@ Player.prototype.handleInput = function(key) {
 	}
 };
 
-let player = new Player(START.x, START.y);
+const player = new Player(START.x, START.y);
 const enemy1 = new Enemy(0, FIELD.row - 20, SPEED(), player);
 const enemy2 = new Enemy(0, FIELD.row * 2 - 20, SPEED(), player);
 const enemy3 = new Enemy(0, FIELD.row * 3 - 20, SPEED(), player);
