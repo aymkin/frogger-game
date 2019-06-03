@@ -37,6 +37,7 @@ Enemy.prototype.update = function(dt) {
 		this.speed = SPEED();
 	}
 	if (this.isCollision()) {
+		alert(`You lost! The score is demotioned to ${scoreCount -= 1}`);
 		this.gamer.beginAgain();
 	}
 };
@@ -84,7 +85,14 @@ Player.prototype.handleInput = function(key) {
 
 			if (this.y < 0) {
 				scoreCount++;
-				alert(`You win ${scoreCount} times!`);
+				if (scoreCount < 5){
+					alert(`You win ${scoreCount} times!`);
+				} else {
+					alert(`You are absolute winner with score ${scoreCount} !`);
+					scoreCount = 0;
+					alert('The new game is started');
+				}
+				
 				this.beginAgain();
 			}
 			break;
