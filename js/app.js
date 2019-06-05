@@ -58,15 +58,8 @@ Enemy.prototype.isCollision = function() {
 		this.x <= this.gamer.x + FIELD.column &&
 		this.y + 10 == this.gamer.y
 	) {
-		scoreCount -= 1;
-		if(scoreCount < 0){
-			scoreCount = 0;
-			alert('You are death at all! Next time try better luck!');
-		} else {
-			alert(`You lost! The score is demotioned to ${(scoreCount)}`);
-		}
+		this.gamer.loosePoints();
 		this.gamer.beginAgain();
-		return true;
 	}
 };
 
@@ -105,7 +98,7 @@ Player.prototype.handleInput = function(key) {
 Player.prototype.setScore = function() {
 	if (this.y < 0) {
 		scoreCount++;
-		if (scoreCount < 5) {
+		if (scoreCount < 3) {
 			alert(`You win ${scoreCount} times!`);
 		} else {
 			alert(`You are absolute winner with score ${scoreCount} !`);
@@ -113,6 +106,16 @@ Player.prototype.setScore = function() {
 			alert('The new game is started');
 		}
 		this.beginAgain();
+	}
+};
+
+Player.prototype.loosePoints = function() {
+	scoreCount -= 1;
+	if (scoreCount < 0) {
+		scoreCount = 0;
+		alert('You are death at all! Next time try better luck!');
+	} else {
+		alert(`You lost! The score is demotioned to ${scoreCount}`);
 	}
 };
 
