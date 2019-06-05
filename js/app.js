@@ -1,9 +1,14 @@
 let scoreCount = 0;
 
-const START = {
+const playerCoordinate = {
 	x: 202,
 	y: 405,
 };
+
+const enemyCoordinate = {
+	x: 0,
+	y: [63, 164, 229]
+}
 
 const FIELD = {
 	column: 101,
@@ -68,8 +73,8 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.beginAgain = function() {
-	this.x = START.x;
-	this.y = START.y;
+	this.x = playerCoordinate.x;
+	this.y = playerCoordinate.y;
 };
 
 Player.prototype.handleInput = function(key) {
@@ -101,10 +106,10 @@ Player.prototype.handleInput = function(key) {
 	}
 };
 
-const player = new Player(START.x, START.y);
-const enemy1 = new Enemy(0, FIELD.row - 20, player);
-const enemy2 = new Enemy(0, FIELD.row * 2 - 20, player);
-const enemy3 = new Enemy(0, FIELD.row * 3 - 20, player);
+const player = new Player(playerCoordinate.x, playerCoordinate.y);
+const enemy1 = new Enemy(enemyCoordinate.x, enemyCoordinate.y[0], player);
+const enemy2 = new Enemy(enemyCoordinate.x, enemyCoordinate.y[1], player);
+const enemy3 = new Enemy(enemyCoordinate.x, enemyCoordinate.y[2], player);
 
 const allEnemies = [enemy1, enemy2, enemy3];
 
