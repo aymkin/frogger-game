@@ -7,8 +7,8 @@ const playerCoordinate = {
 
 const enemyCoordinate = {
 	x: 0,
-	y: [63, 164, 229]
-}
+	y: [63, 164, 229],
+};
 
 const FIELD = {
 	column: 101,
@@ -24,12 +24,18 @@ const Creature = function(x, y) {
 	this.y = y;
 };
 
+Creature.prototype.render = function() {
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
 const Enemy = function(x, y, gamer) {
 	Creature.call(this, x, y);
 	this.speed = this.getRandSpeed();
 	this.gamer = gamer;
 	this.sprite = 'images/enemy-bug.png';
 };
+
+Enemy.prototype = Object.create(Creature.prototype);
 
 Enemy.prototype.getRandSpeed = function(min = 75, max = 200) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -47,10 +53,6 @@ Enemy.prototype.update = function(dt) {
 	}
 };
 
-Enemy.prototype.render = function() {
-	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
 Enemy.prototype.isCollision = function() {
 	if (
 		this.x + FIELD.column >= this.gamer.x &&
@@ -66,11 +68,9 @@ const Player = function(x, y) {
 	this.sprite = 'images/char-boy.png';
 };
 
-Player.prototype.update = function() {};
+Player.prototype = Object.create(Creature.prototype);
 
-Player.prototype.render = function() {
-	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+Player.prototype.update = function() {};
 
 Player.prototype.beginAgain = function() {
 	this.x = playerCoordinate.x;
