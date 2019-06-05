@@ -3,13 +3,13 @@ let scoreCount = 0;
 const playerStartValues = {
 	x: 202,
 	y: 405,
-	sprite: 'images/char-boy.png'
+	sprite: 'images/char-boy.png',
 };
 
 const enemyStartValues = {
 	x: 0,
 	y: [63, 146, 229],
-	sprite: 'images/enemy-bug.png'
+	sprite: 'images/enemy-bug.png',
 };
 
 const FIELD = {
@@ -107,10 +107,29 @@ Player.prototype.handleInput = function(key) {
 	}
 };
 
-const player = new Player(playerStartValues.x, playerStartValues.y, playerStartValues.sprite);
-const enemy1 = new Enemy(enemyStartValues.x, enemyStartValues.y[0], enemyStartValues.sprite, player);
-const enemy2 = new Enemy(enemyStartValues.x, enemyStartValues.y[1], enemyStartValues.sprite, player);
-const enemy3 = new Enemy(enemyStartValues.x, enemyStartValues.y[2], enemyStartValues.sprite, player);
+const player = new Player(
+	playerStartValues.x,
+	playerStartValues.y,
+	playerStartValues.sprite
+);
+const enemy1 = new Enemy(
+	enemyStartValues.x,
+	enemyStartValues.y[0],
+	enemyStartValues.sprite,
+	player
+);
+const enemy2 = new Enemy(
+	enemyStartValues.x,
+	enemyStartValues.y[1],
+	enemyStartValues.sprite,
+	player
+);
+const enemy3 = new Enemy(
+	enemyStartValues.x,
+	enemyStartValues.y[2],
+	enemyStartValues.sprite,
+	player
+);
 
 const allEnemies = [enemy1, enemy2, enemy3];
 
