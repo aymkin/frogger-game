@@ -7,7 +7,7 @@ const playerCoordinate = {
 
 const enemyCoordinate = {
 	x: 0,
-	y: [63, 164, 229],
+	y: [63, 146, 229],
 };
 
 const FIELD = {
