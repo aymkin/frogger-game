@@ -1,13 +1,15 @@
 let scoreCount = 0;
 
-const playerCoordinate = {
+const playerStartValues = {
 	x: 202,
 	y: 405,
+	sprite: 'images/char-boy.png'
 };
 
-const enemyCoordinate = {
+const enemyStartValues = {
 	x: 0,
 	y: [63, 146, 229],
+	sprite: 'images/enemy-bug.png'
 };
 
 const FIELD = {
@@ -19,20 +21,20 @@ const FIELD = {
 	bottomBorder: 322,
 };
 
-const Creature = function(x, y) {
+const Creature = function(x, y, sprite) {
 	this.x = x;
 	this.y = y;
+	this.sprite = sprite;
 };
 
 Creature.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-const Enemy = function(x, y, gamer) {
-	Creature.call(this, x, y);
+const Enemy = function(x, y, sprite, gamer) {
+	Creature.call(this, x, y, sprite);
 	this.speed = this.getRandSpeed();
 	this.gamer = gamer;
-	this.sprite = 'images/enemy-bug.png';
 };
 
 Enemy.prototype = Object.create(Creature.prototype);
@@ -63,9 +65,8 @@ Enemy.prototype.isCollision = function() {
 	}
 };
 
-const Player = function(x, y) {
-	Creature.call(this, x, y);
-	this.sprite = 'images/char-boy.png';
+const Player = function(x, y, sprite) {
+	Creature.call(this, x, y, sprite);
 };
 
 Player.prototype = Object.create(Creature.prototype);
@@ -73,8 +74,8 @@ Player.prototype = Object.create(Creature.prototype);
 Player.prototype.update = function() {};
 
 Player.prototype.beginAgain = function() {
-	this.x = playerCoordinate.x;
-	this.y = playerCoordinate.y;
+	this.x = playerStartValues.x;
+	this.y = playerStartValues.y;
 };
 
 Player.prototype.handleInput = function(key) {
@@ -106,10 +107,10 @@ Player.prototype.handleInput = function(key) {
 	}
 };
 
-const player = new Player(playerCoordinate.x, playerCoordinate.y);
-const enemy1 = new Enemy(enemyCoordinate.x, enemyCoordinate.y[0], player);
-const enemy2 = new Enemy(enemyCoordinate.x, enemyCoordinate.y[1], player);
-const enemy3 = new Enemy(enemyCoordinate.x, enemyCoordinate.y[2], player);
+const player = new Player(playerStartValues.x, playerStartValues.y, playerStartValues.sprite);
+const enemy1 = new Enemy(enemyStartValues.x, enemyStartValues.y[0], enemyStartValues.sprite, player);
+const enemy2 = new Enemy(enemyStartValues.x, enemyStartValues.y[1], enemyStartValues.sprite, player);
+const enemy3 = new Enemy(enemyStartValues.x, enemyStartValues.y[2], enemyStartValues.sprite, player);
 
 const allEnemies = [enemy1, enemy2, enemy3];
 
