@@ -71,7 +71,9 @@ const Player = function(x, y, sprite) {
 
 Player.prototype = Object.create(Creature.prototype);
 
-Player.prototype.update = function() {};
+Player.prototype.update = function() {
+	this.setScore();
+};
 
 Player.prototype.beginAgain = function() {
 	this.x = playerStartValues.x;
@@ -88,7 +90,6 @@ Player.prototype.handleInput = function(key) {
 			break;
 		case 'up':
 			if (this.y >= FIELD.topBorder) this.y -= FIELD.row;
-				this.setScore();
 			break;
 		case 'down':
 			if (this.y <= FIELD.bottomBorder) this.y += FIELD.row;
