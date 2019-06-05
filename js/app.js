@@ -88,24 +88,27 @@ Player.prototype.handleInput = function(key) {
 			break;
 		case 'up':
 			if (this.y >= FIELD.topBorder) this.y -= FIELD.row;
-
-			if (this.y < 0) {
-				scoreCount++;
-				if (scoreCount < 5) {
-					alert(`You win ${scoreCount} times!`);
-				} else {
-					alert(`You are absolute winner with score ${scoreCount} !`);
-					scoreCount = 0;
-					alert('The new game is started');
-				}
-				this.beginAgain();
-			}
+				this.setScore();
 			break;
 		case 'down':
 			if (this.y <= FIELD.bottomBorder) this.y += FIELD.row;
 			break;
 	}
 };
+
+Player.prototype.setScore = function() {
+	if (this.y < 0) {
+		scoreCount++;
+		if (scoreCount < 5) {
+			alert(`You win ${scoreCount} times!`);
+		} else {
+			alert(`You are absolute winner with score ${scoreCount} !`);
+			scoreCount = 0;
+			alert('The new game is started');
+		}
+		this.beginAgain();
+	}
+}
 
 const player = new Player(
 	playerStartValues.x,
