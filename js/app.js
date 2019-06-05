@@ -49,10 +49,7 @@ Enemy.prototype.update = function(dt) {
 		this.x = -101;
 		this.speed = this.getRandSpeed();
 	}
-	if (this.isCollision()) {
-		alert(`You lost! The score is demotioned to ${(scoreCount -= 1)}`);
-		this.gamer.beginAgain();
-	}
+	this.isCollision();
 };
 
 Enemy.prototype.isCollision = function() {
@@ -61,6 +58,8 @@ Enemy.prototype.isCollision = function() {
 		this.x <= this.gamer.x + FIELD.column &&
 		this.y + 10 == this.gamer.y
 	) {
+		alert(`You lost! The score is demotioned to ${(scoreCount -= 1)}`);
+		this.gamer.beginAgain();
 		return true;
 	}
 };
@@ -109,7 +108,7 @@ Player.prototype.setScore = function() {
 		}
 		this.beginAgain();
 	}
-}
+};
 
 const player = new Player(
 	playerStartValues.x,
@@ -117,7 +116,11 @@ const player = new Player(
 	playerStartValues.sprite
 );
 
-const allEnemies = [enemyStartValues.y[0], enemyStartValues.y[1], enemyStartValues.y[2]].map(y =>  new Enemy(enemyStartValues.x, y, enemyStartValues.sprite, player));
+const allEnemies = [
+	enemyStartValues.y[0],
+	enemyStartValues.y[1],
+	enemyStartValues.y[2],
+].map(y => new Enemy(enemyStartValues.x, y, enemyStartValues.sprite, player));
 
 document.addEventListener('keyup', function(e) {
 	var allowedKeys = {
