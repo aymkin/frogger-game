@@ -58,7 +58,13 @@ Enemy.prototype.isCollision = function() {
 		this.x <= this.gamer.x + FIELD.column &&
 		this.y + 10 == this.gamer.y
 	) {
-		alert(`You lost! The score is demotioned to ${(scoreCount -= 1)}`);
+		scoreCount -= 1;
+		if(scoreCount < 0){
+			scoreCount = 0;
+			alert('You are death at all! Next time try better luck!');
+		} else {
+			alert(`You lost! The score is demotioned to ${(scoreCount)}`);
+		}
 		this.gamer.beginAgain();
 		return true;
 	}
